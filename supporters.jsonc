@@ -1,0 +1,24 @@
+[
+  // Add your entry here. Copy an example, remove //, and replace the details.
+  // Добавьте запись здесь: скопируйте пример, уберите // и замените данные.
+  // Separate entries with commas. No trailing comma after the last entry.
+  // Между записями ставится запятая. После последней записи запятой нет.
+  // Examples are fictional and are not published as signatures.
+  // Примеры вымышленные и не отображаются среди подписантов.
+
+  // Person / Человек:
+  // {
+  //   "type": "person",
+  //   "name": "Example Person",
+  //   "url": "https://example.org/people/example",
+  //   "description": "Developer"
+  // }
+
+  // Organization or team / Организация или команда:
+  // {
+  //   "type": "organization",
+  //   "name": "Example Team",
+  //   "url": "https://example.org",
+  //   "description": "Independent software team"
+  // }
+]

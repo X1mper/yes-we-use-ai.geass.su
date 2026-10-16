@@ -8,7 +8,7 @@ You don't have to use AI to support freedom of tool choice, responsible testing,
 
 ### A one-file pull request
 
-1. Fork this repository, or use GitHub's web editor for [`supporters.json`](supporters.json).
+1. Fork this repository, or use GitHub's web editor for [`supporters.jsonc`](supporters.jsonc).
 2. Add **one object** to the JSON array. Keep existing entries. GitHub's web editor will offer to create a fork if necessary.
 3. Open a pull request and fill in the short checklist. You do **not** need to edit HTML, translate your name, run a build, or commit generated files.
 
@@ -33,7 +33,7 @@ Organization:
 }
 ```
 
-These are fictional examples, not real signatories. For the first signature, replace `[]` with an array containing your object. For subsequent ones, insert a comma between objects. `type`, `name`, and `url` are required; `description` is optional. Use double quotes and no trailing commas.
+The file uses JSONC (JSON with comments) and contains commented examples for a person and a team. Copy an example inside the array, remove its `//` prefixes, and replace the fictional details with yours. Leave the examples commented out. Insert a comma between real entries, but not after the last one. `type`, `name`, and `url` are required; `description` is optional. Use double quotes. `//` line comments and `/* … */` block comments are supported; trailing commas are not.
 
 - `type`: exactly `person` or `organization`.
 - `name`: public name or handle, up to 100 characters.
@@ -56,8 +56,8 @@ Names are sorted automatically within the People and Organizations lists. No HTM
 
 Чтобы поддержать свободу выбора инструментов и ответственную работу, не обязательно использовать ИИ. Подписываясь, вы соглашаетесь с принципами письма, включая ответственность и тщательное тестирование там, где это относится к вашей работе.
 
-1. Откройте `supporters.json` в редакторе GitHub. При необходимости GitHub предложит создать форк.
-2. Добавьте один объект в массив: `type` (`person` или `organization`), `name`, `url` (публичная HTTPS-ссылка). Примеры выше вымышленные. Для первой подписи вместо `[]` нужен массив с вашим объектом; между следующими объектами ставится запятая.
+1. Откройте `supporters.jsonc` в редакторе GitHub. При необходимости GitHub предложит создать форк.
+2. Внутри файла есть закомментированные примеры человека и команды. Скопируйте один из них внутрь массива, уберите у копии `//` и замените вымышленные данные своими: `type` (`person` или `organization`), `name`, `url` (публичная HTTPS-ссылка). Между реальными записями ставится запятая, после последней — нет. Исходные примеры оставьте комментариями. Поддерживаются комментарии `//` и `/* … */`; запятые перед закрывающей скобкой не поддерживаются.
 3. Необязательное `description` — краткая роль или проект. Оно показывается одинаково в обеих версиях сайта; можно написать на русском, английском или коротко на обоих языках.
 4. Создайте PR и заполните чеклист. HTML менять, сборку запускать и generated-файлы коммитить **не нужно**.
 

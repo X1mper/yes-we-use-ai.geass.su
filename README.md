@@ -12,7 +12,7 @@ Read the letter: **[English](https://yes-we-use-ai.geass.su/en/)** · **[Russian
 
 ## Sign the letter
 
-People and organizations can sign by adding one entry to [`supporters.json`](supporters.json) and opening a pull request. No HTML changes or local setup required.
+People and organizations can sign by adding one entry to [`supporters.jsonc`](supporters.jsonc) and opening a pull request. No HTML changes or local setup required.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and guidelines. Sign only for yourself or an organization you're authorized to represent. Signatures are reviewed before publication.
 
@@ -40,7 +40,7 @@ python3 -m http.server 8766 --bind 127.0.0.1 --directory build
 Open http://127.0.0.1:8766/ for Russian or `/en/` for English.
 
 - `templates/ru.html`, `templates/en.html` — page templates; update both when editing the letter.
-- `supporters.json` — people and organizations supporting the letter.
+- `supporters.jsonc` — people and organizations supporting the letter, with commented examples.
 - `style.css`, `language.js`, `*.svg` — shared styles, language switching, badge snippets, and artwork.
 - `tools/build.py` — validates supporter entries and builds both pages.
 - `build/` — generated site; do not edit or commit.

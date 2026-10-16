@@ -33,10 +33,22 @@ def https_url(value, field):
     return value
 
 
+def parse_jsonc(source):
+    # Match quoted strings before comments so URLs and escaped quotes stay intact.
+    tokens = r'"(?:\\.|[^"\\])*"|//[^\r\n]*|/\*[\s\S]*?\*/'
+    def strip_comment(match):
+        token = match[0]
+        if token.startswith('"'):
+            return token
+        # Preserve line/column offsets for useful JSON error messages.
+        return ''.join(c if c in '\r\n' else ' ' for c in token)
+    return json.loads(re.sub(tokens, strip_comment, source))
+
+
 def load_supporters(path):
-    records = json.loads(path.read_text(encoding='utf-8'))
+    records = parse_jsonc(path.read_text(encoding='utf-8-sig'))
     if not isinstance(records, list):
-        raise ValueError('supporters.json must be an array')
+        raise ValueError('supporters.jsonc must be an array')
     seen_names, seen_urls = set(), set()
     for i, record in enumerate(records):
         label = f'supporters[{i}]'
@@ -87,7 +99,7 @@ def build():
     repository = config['repository']
     if not isinstance(repository, str) or not re.fullmatch(r'https://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repository):
         raise ValueError('repository must be https://github.com/OWNER/REPO')
-    records = load_supporters(ROOT / 'supporters.json')
+    records = load_supporters(ROOT / 'supporters.jsonc')
     # Render and validate everything before replacing the previous output.
     pages = {}
     for lang in ('ru', 'en'):
@@ -95,7 +107,7 @@ def build():
         replacements = {
             '{{SUPPORTERS}}': render_supporters(records, lang),
             '{{REPOSITORY}}': html.escape(repository, quote=True),
-            '{{EDIT_SUPPORTERS}}': html.escape(repository + '/edit/main/supporters.json', quote=True),
+            '{{EDIT_SUPPORTERS}}': html.escape(repository + '/edit/main/supporters.jsonc', quote=True),
             '{{CONTRIBUTING}}': html.escape(repository + '/blob/main/CONTRIBUTING.md', quote=True),
         }
         markers = set(re.findall(r'\{\{[^{}]*\}\}', source))
