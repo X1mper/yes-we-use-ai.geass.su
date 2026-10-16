@@ -38,5 +38,11 @@
     "url": "https://rirusha.space",
     "description": "Coder on Vala and ALT Gnome Development leader",
     "avatar": "/avatars/rirusha.png"
+  },
+  {
+    "type": "person",
+    "name": "Alexei Zebra",
+    "url": "https://altlinux.space/alexei.zebra",
+    "avatar": "/avatars/alexei-zerba.svg"
   }
 ]
