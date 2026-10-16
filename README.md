@@ -28,6 +28,10 @@ Add this to your project's README:
 
 The badge shows support for the letter. It isn't a quality certification.
 
+## Publishing
+
+Accepted changes on `main` are built by GitHub Actions and published to the `deploy` branch. The website updates automatically after a successful build. Pull requests are reviewed before merging and cannot deploy directly.
+
 ## Run locally
 
 Requires Python 3.10 or later. No third-party dependencies.
@@ -43,6 +47,7 @@ Open http://127.0.0.1:8766/ for Russian or `/en/` for English.
 - `supporters.jsonc` — people and organizations supporting the letter, with commented examples.
 - `style.css`, `language.js`, `*.svg` — shared styles, language switching, badge snippets, and artwork.
 - `tools/build.py` — validates supporter entries and builds both pages.
+- `tools/release.py` — creates the static release inventory; GitHub Actions publishes it after changes to `main`.
 - `build/` — generated site; do not edit or commit.
 
 Both languages and the signature lists work without JavaScript.

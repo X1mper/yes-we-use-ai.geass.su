@@ -1,0 +1,66 @@
+name: Publish static site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build and inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/build.py
+          python3 tools/release.py --source-commit "$GITHUB_SHA"
+      - name: Publish deploy branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh auth setup-git --hostname github.com
+          publish_dir=$(mktemp -d)
+          trap 'rm -rf -- "$publish_dir"' EXIT
+          git init --quiet "$publish_dir"
+          git -C "$publish_dir" config user.name 'github-actions[bot]'
+          git -C "$publish_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "$publish_dir" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          # A successful empty response means the branch does not yet exist.
+          # Authentication/network errors remain fatal under strict mode.
+          deploy_ref=$(git -C "$publish_dir" ls-remote --refs origin refs/heads/deploy)
+          if [[ -n "$deploy_ref" ]]; then
+            deploy_sha=${deploy_ref%%$'\t'*}
+            git -C "$publish_dir" fetch --no-tags origin "$deploy_sha"
+            git -C "$publish_dir" checkout --quiet -b deploy FETCH_HEAD
+            git -C "$publish_dir" rm -r --ignore-unmatch --quiet .
+          else
+            git -C "$publish_dir" checkout --quiet --orphan deploy
+          fi
+          cp -a build/. "$publish_dir/"
+          git -C "$publish_dir" add --all
+          git -C "$publish_dir" commit --quiet --allow-empty -m "Publish ${GITHUB_SHA}"
+          # Check immediately before pushing; a concurrent deploy update is also
+          # rejected by the ordinary fast-forward-only push (never force).
+          main_ref=$(git -C "$publish_dir" ls-remote --refs origin refs/heads/main)
+          if [[ "${main_ref%%$'\t'*}" != "$GITHUB_SHA" ]]; then
+            echo 'Source is no longer main HEAD; skipping publication.'
+            exit 0
+          fi
+          git -C "$publish_dir" push origin HEAD:refs/heads/deploy

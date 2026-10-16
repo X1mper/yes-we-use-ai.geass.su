@@ -50,8 +50,8 @@ Names are sorted automatically within the People and Organizations lists. No HTM
 - Signing as a person does not sign on behalf of your employer. Organizational signatures are separate.
 - No unsolicited signatures, impersonation, spam, harassment, or unrelated advertising.
 - By submitting, you consent to public display of this entry and its retention in Git/PR history. For corrections or removal from the live list, open a PR or issue; removing an entry from the website does not erase public history or third-party caches.
-- Maintainers review consent, affiliation where applicable, content, and run the local validation/build. A successful build is not identity verification. There is no automatic merge or deployment from a PR.
-- After merge, maintainers rebuild and deploy the site. A badge can be used independently; it does not automatically add a signature and is not a quality certification.
+- Maintainers review consent, affiliation where applicable, content, and run the local validation/build. A successful build is not identity verification. There is no automatic merge or deployment from an unmerged PR.
+- After merge, GitHub Actions builds and publishes the site automatically. A badge can be used independently; it does not automatically add a signature and is not a quality certification.
 
 ## Русский
 
@@ -69,7 +69,7 @@ Names are sorted automatically within the People and Organizations lists. No HTM
 
 Добавляя запись, вы соглашаетесь с её публичной публикацией, в том числе в истории Git и PR. Для исправления или удаления с сайта откройте PR/issue; публичная история и чужие кэши при этом не исчезают. Чужие подписи без согласия не добавляем и не меняем. Запрещены травля, подмена личности, спам и посторонняя реклама.
 
-Каждую заявку проверяет человек; перед публикацией мы локально проверяем формат и собираем сайт. После принятия PR мы собираем и обновляем сайт вручную. Шильдик не добавляет вас в список автоматически и не является гарантией качества.
+Каждую заявку проверяет человек. После принятия PR GitHub Actions проверяет данные и собирает сайт; успешная сборка публикуется автоматически. Шильдик не добавляет вас в список автоматически и не является гарантией качества.
 
 ## Development / Разработка
 
@@ -79,4 +79,4 @@ python3 -m http.server 8766 --bind 127.0.0.1 --directory build
 node --check language.js
 ```
 
-Python 3.10+, no third-party packages. Edit `templates/ru.html` and `templates/en.html` together. Output is in ignored `build/`. There are no GitHub Actions workflows. Maintainers run validation, build, and deployment manually after reviewing the PR.
+Python 3.10+, no third-party packages. Edit `templates/ru.html` and `templates/en.html` together. Output is in ignored `build/`. The publishing workflow runs only on `main` updates or a manual dispatch on `main`, not on pull requests. GitHub-hosted runners build the static release. There is no automatic merge.
