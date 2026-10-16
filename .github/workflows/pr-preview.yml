@@ -1,0 +1,54 @@
+name: PR browser preview
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Exercise changes to the preview machinery itself on trusted main too.
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/pr-preview.yml
+      - .github/workflows/pr-preview-comment.yml
+      - .github/scripts/comment-preview.mjs
+      - tools/preview.mjs
+      - package.json
+      - package-lock.json
+      - .github/scripts/comment-preview.test.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-browser-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out proposed merge (without credentials)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # PR GITHUB_SHA is GitHub's proposed merge, including current base tooling.
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Install pinned preview tools
+        run: npm ci --ignore-scripts
+      - name: Install Chromium
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Check comment safety logic
+        run: npm run test:preview-comment
+      - name: Build and capture RU/EN at two widths
+        run: npm run preview
+      - name: Upload screenshots
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: browser-preview
+          path: output/pr-preview/*.png
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+          overwrite: true

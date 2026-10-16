@@ -43,6 +43,10 @@ The file uses JSONC (JSON with comments) and contains commented examples for a p
 
 Names are sorted automatically within the People and Organizations lists. No HTML, scripts, slogans, or extra fields. No one else should edit or remove an existing signature without the signer's request and maintainer review.
 
+### Browser preview
+
+Each new push to your PR refreshes four Chromium screenshots (RU/EN, 1440 px and 375 px). The bot updates one comment with the artifact link and commit ID; screenshots expire after 14 days and downloading requires GitHub sign-in. GitHub may ask a maintainer to approve checks for a first-time fork contributor. A failed build is reported with a run link rather than stale screenshots. This does not deploy the PR.
+
 ### Consent and review
 
 - Submit your own signature from your own account. A handle is fine; we do not ask for legal names or identity documents.
@@ -68,6 +72,8 @@ Names are sorted automatically within the People and Organizations lists. No HTM
 Подписывайтесь только за себя. За организацию — только с правом её представлять: добавьте в PR публичную ссылку, подтверждающую связь с организацией. При необходимости мы запросим подтверждение по официальному каналу; приватные документы не нужны. Личная подпись не означает поддержку работодателя.
 
 Добавляя запись, вы соглашаетесь с её публичной публикацией, в том числе в истории Git и PR. Для исправления или удаления с сайта откройте PR/issue; публичная история и чужие кэши при этом не исчезают. Чужие подписи без согласия не добавляем и не меняем. Запрещены травля, подмена личности, спам и посторонняя реклама.
+
+Каждый push в PR обновляет четыре скриншота Chromium (RU/EN, ширины 1440 и 375 px). Бот обновляет один комментарий ссылкой на артефакт и указывает коммит. Хранение — 14 дней; скачивание требует входа в GitHub. Первому PR из форка может понадобиться стандартное одобрение проверки сопровождающим. Ошибка сборки отмечается ссылкой на запуск, а не старыми скриншотами. До принятия PR сайт не меняется.
 
 Каждую заявку проверяет человек. После принятия PR GitHub Actions проверяет данные и собирает сайт; успешная сборка публикуется автоматически. Шильдик не добавляет вас в список автоматически и не является гарантией качества.
 

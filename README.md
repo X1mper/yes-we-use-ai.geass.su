@@ -28,13 +28,19 @@ Add this to your project's README:
 
 The badge shows support for the letter. It isn't a quality certification.
 
+## PR browser previews
+
+Each push to a pull request builds a Chromium preview: English and Russian, at 1440 px and 375 px wide. A bot updates its PR comment with a link to the latest screenshots and the commit ID. GitHub sign-in is required to download the artifact; screenshots are retained for 14 days. First-time fork checks may need a maintainer's approval in GitHub.
+
+Previews do not deploy the PR. The screenshot job has read-only permissions; a separate trusted job posts the link without executing PR code.
+
 ## Publishing
 
 Accepted changes on `main` are built by GitHub Actions and published to the `deploy` branch. The website updates automatically after a successful build. Pull requests are reviewed before merging and cannot deploy directly.
 
 ## Run locally
 
-Requires Python 3.10 or later. No third-party dependencies.
+The static build only needs Python 3.10 or later.
 
 ```sh
 python3 tools/build.py
@@ -51,3 +57,14 @@ Open http://127.0.0.1:8766/ for Russian or `/en/` for English.
 - `build/` — generated site; do not edit or commit.
 
 Both languages and the signature lists work without JavaScript.
+
+Optional local screenshots (Node.js 20 or later):
+
+```sh
+npm ci --ignore-scripts
+npx playwright install chromium
+npm run preview
+npm run test:preview-comment
+```
+
+Four PNG files are written to ignored `output/pr-preview/`. Playwright is pinned in the lockfile and is only used for development and PR previews.
