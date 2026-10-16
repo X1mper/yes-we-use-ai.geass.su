@@ -31,5 +31,12 @@
     "name": "Ximper",
     "url": "https://ximper.members.geass.su/",
     "avatar": "/avatars/ximper.jpg"
+  },
+  {
+    "type": "person",
+    "name": "Vladimir Romanov",
+    "url": "https://rirusha.space",
+    "description": "Coder on Vala and ALT Gnome Development leader",
+    "avatar": "/avatars/rirusha.png"
   }
 ]
