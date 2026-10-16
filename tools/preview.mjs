@@ -41,7 +41,7 @@ async function main() {
     for (const [size, width] of [['desktop', 1440], ['narrow', 375]]) {
       const context = await browser.newContext({
         viewport: { width, height: 1000 }, deviceScaleFactor: 1,
-        colorScheme: 'light', reducedMotion: 'reduce', locale: language === 'ru' ? 'ru-RU' : 'en-US',
+        colorScheme: 'dark', reducedMotion: 'reduce', locale: language === 'ru' ? 'ru-RU' : 'en-US',
         serviceWorkers: 'block',
       });
       try {
