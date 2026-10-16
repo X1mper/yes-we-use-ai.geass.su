@@ -115,7 +115,7 @@ def render_supporters(records, lang):
             if entry.get('avatar'):
                 src = html.escape(entry['avatar'], quote=True)
                 avatar = f'<img class="supporter-avatar" src="{src}" width="52" height="52" alt="" loading="lazy" decoding="async">'
-            parts.append(f'<li>{avatar}<div><a href="{url}" rel="nofollow ugc">{name}</a>{description}</div></li>')
+            parts.append(f'<li>{avatar}<div><a href="{url}" title="{name}" rel="nofollow ugc">{name}</a>{description}</div></li>')
         parts.append('</ul>')
     return '\n'.join(parts)
 
