@@ -1,0 +1,46 @@
+{
+  "files": {
+    "avatars/rirusha.png": {
+      "sha256": "29d27ae4cbaa61365b39332fdf18faedeadff5a21e83c30c7556ff2a6271d35b",
+      "size": 133703
+    },
+    "avatars/ximper.jpg": {
+      "sha256": "20595412b53b097b99ac412645bd010d3e6ff6fbd62fd8c1689703f27efd103f",
+      "size": 13431
+    },
+    "badge-ru.svg": {
+      "sha256": "8365a64ddcfca93e02c983d059859220467842221a1513755baa26721e846fa1",
+      "size": 746
+    },
+    "badge.svg": {
+      "sha256": "b45fd48d96a4bcff3081df20a6927de4a93663d921d7de4c8fbb357f0d4a5abc",
+      "size": 695
+    },
+    "en/index.html": {
+      "sha256": "b78de85f31ca03e7ae4dd20f0340047dc46b9fc18be132ec98a7e2e88ea8546c",
+      "size": 8985
+    },
+    "favicon.svg": {
+      "sha256": "ec31bf65cfb8b1975419a434de1e67e961782e5d387a260225a811fb7d20d10a",
+      "size": 273
+    },
+    "hero.svg": {
+      "sha256": "533b834d6bbea2d222b6126a8a5695631b24a7033e17a1ea9b8ccad44d3ef0d0",
+      "size": 446
+    },
+    "index.html": {
+      "sha256": "868699b303cad8bf4dad784dbed9f8eb44a65423e61f16e448701da8792c9b08",
+      "size": 12046
+    },
+    "language.js": {
+      "sha256": "40d450fa82d1c3066bf68ca2d289df0f8b5f076ef016175aa84071f328f7f2db",
+      "size": 1505
+    },
+    "style.css": {
+      "sha256": "408326fa35b6c22d47884a859f1ee73409695bc1f7f3703d4df3739128f6ac06",
+      "size": 7209
+    }
+  },
+  "schema": 1,
+  "source_commit": "dbaff631663d642434bebf5e5b6870a37a485d2b"
+}
