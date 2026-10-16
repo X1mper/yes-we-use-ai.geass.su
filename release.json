@@ -1,5 +1,9 @@
 {
   "files": {
+    "avatars/alexei-zerba.svg": {
+      "sha256": "f3c2c2ecaad2f5f26eb0b7b30d4263f1ae6e2830db420248fdef75fab5e620b3",
+      "size": 1806
+    },
     "avatars/rirusha.png": {
       "sha256": "29d27ae4cbaa61365b39332fdf18faedeadff5a21e83c30c7556ff2a6271d35b",
       "size": 133703
@@ -17,8 +21,8 @@
       "size": 695
     },
     "en/index.html": {
-      "sha256": "b78de85f31ca03e7ae4dd20f0340047dc46b9fc18be132ec98a7e2e88ea8546c",
-      "size": 8985
+      "sha256": "e467771694dd39b5f830c532c53b48c1759cbd7c82a8c04f625022cc53e7ab08",
+      "size": 9232
     },
     "favicon.svg": {
       "sha256": "ec31bf65cfb8b1975419a434de1e67e961782e5d387a260225a811fb7d20d10a",
@@ -29,8 +33,8 @@
       "size": 446
     },
     "index.html": {
-      "sha256": "868699b303cad8bf4dad784dbed9f8eb44a65423e61f16e448701da8792c9b08",
-      "size": 12046
+      "sha256": "3c198e589fff243a9b7ae6863b3b9e18eb27f7bc126f93bc27ed1d1b29688e85",
+      "size": 12293
     },
     "language.js": {
       "sha256": "40d450fa82d1c3066bf68ca2d289df0f8b5f076ef016175aa84071f328f7f2db",
@@ -42,5 +46,5 @@
     }
   },
   "schema": 1,
-  "source_commit": "e6a90dee504f98f8a896c555b03ef66f82ad0479"
+  "source_commit": "183ecf1950bedc7327b20b51fabe38b35d8dda7a"
 }
