@@ -24,8 +24,8 @@
   //   "avatar": "/avatars/example-team.png"
   // }
 
-  // avatar is optional. Include the image file in your PR (PNG/JPEG/WebP, max 1 MiB).
-  // avatar необязателен. Добавьте файл картинки в PR (PNG/JPEG/WebP, до 1 МиБ).
+  // avatar is optional. Include the image file in your PR (PNG/JPEG/WebP/static SVG, max 1 MiB; SVG restrictions: CONTRIBUTING.md).
+  // avatar необязателен. Добавьте файл картинки в PR (PNG/JPEG/WebP/статический SVG, до 1 МиБ; ограничения SVG: CONTRIBUTING.md).
   {
     "type": "person",
     "name": "Ximper",

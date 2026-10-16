@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate community data and build the static site. Python 3.10+, stdlib only."""
+from svg_avatar import validate_svg
 import html
 import json
 from pathlib import Path
@@ -35,13 +36,16 @@ def https_url(value, field):
 
 def avatar_path(value):
     if not isinstance(value, str) or not re.fullmatch(
-            r'/avatars/[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.(?:png|jpe?g|webp)', value):
-        raise ValueError('avatar: use /avatars/name.png, .jpg, .jpeg or .webp')
+            r'/avatars/[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.(?:png|jpe?g|webp|svg)', value):
+        raise ValueError('avatar: use /avatars/name.png, .jpg, .jpeg, .webp or .svg')
     path = ROOT / value.lstrip('/')
     if (ROOT / 'avatars').is_symlink() or path.is_symlink() or not path.is_file():
         raise ValueError(f'avatar: missing file or symlink: {value}')
     if not 0 < path.stat().st_size <= 1024 * 1024:
         raise ValueError(f'avatar: file must be at most 1 MiB: {value}')
+    if path.suffix == '.svg':
+        validate_svg(path.read_bytes())
+        return path
     with path.open('rb') as image:
         header = image.read(12)
     if path.suffix == '.png':

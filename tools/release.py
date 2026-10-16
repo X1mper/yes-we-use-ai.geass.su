@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate the generated static site and write its release inventory (stdlib only)."""
+from svg_avatar import validate_svg
 import argparse
 import hashlib
 import json
@@ -13,7 +14,7 @@ BASE_FILES = frozenset({
     'index.html', 'en/index.html', 'style.css', 'language.js',
     'favicon.svg', 'hero.svg', 'badge.svg', 'badge-ru.svg',
 })
-AVATAR = re.compile(r'avatars/[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.(?:png|jpg|jpeg|webp)')
+AVATAR = re.compile(r'avatars/[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.(?:png|jpg|jpeg|webp|svg)')
 MAX_FILE = 2 * 1024 * 1024
 MAX_TOTAL = 128 * 1024 * 1024
 MAX_COUNT = 4096
@@ -44,6 +45,8 @@ def release(source_commit):
         size = path.stat().st_size
         if not 0 < size <= MAX_FILE:
             raise ValueError(f'file must be nonempty and at most 2 MiB: {name}')
+        if name.startswith('avatars/') and path.suffix == '.svg':
+            validate_svg(path.read_bytes())
         total += size
         if total > MAX_TOTAL or len(files) >= MAX_COUNT:
             raise ValueError('release exceeds total size or file count limit')
