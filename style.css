@@ -53,7 +53,9 @@ h1 { font-size: clamp(2.2rem, 5.5vw, 3.5rem); line-height: 1.08; margin: 0; }
 .supporters { padding: .5rem 0 3.5rem; scroll-margin-top: 2rem; }
 .supporters h2 { margin-bottom: .6em; }
 .supporter-list { padding: 0; margin: 0; list-style: none; }
-.supporter-list li { margin: 0 0 1em; overflow-wrap: anywhere; }
+.supporter-list li { display: flex; align-items: center; gap: .8rem; margin: 0 0 1em; overflow-wrap: anywhere; }
+.supporter-list li > div { min-width: 0; }
+.supporter-avatar { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
 .supporter-list span { display: block; font-size: .85rem; color: var(--muted); }
 .muted { color: var(--muted); font-size: .88rem; }
 .support-note { margin-top: 2rem; font-size: .8rem; color: var(--muted); }

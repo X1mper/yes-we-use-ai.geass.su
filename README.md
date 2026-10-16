@@ -14,7 +14,7 @@ Read the letter: **[English](https://yes-we-use-ai.geass.su/en/)** · **[Russian
 
 People and organizations can sign by adding one entry to [`supporters.jsonc`](supporters.jsonc) and opening a pull request. No HTML changes or local setup required.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and guidelines. Sign only for yourself or an organization you're authorized to represent. Signatures are reviewed before publication.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for examples and guidelines. Sign only for yourself or an organization you're authorized to represent. Signatures are reviewed before publication. For an optional avatar, add an image in `avatars/` and set `avatar` to its path, such as `/avatars/your-name.jpg`.
 
 ## Get the badge
 

@@ -11,7 +11,8 @@
   //   "type": "person",
   //   "name": "Example Person",
   //   "url": "https://example.org/people/example",
-  //   "description": "Developer"
+  //   "description": "Developer",
+  //   "avatar": "/avatars/example-person.png"
   // }
 
   // Organization or team / Организация или команда:
@@ -19,6 +20,16 @@
   //   "type": "organization",
   //   "name": "Example Team",
   //   "url": "https://example.org",
-  //   "description": "Independent software team"
+  //   "description": "Independent software team",
+  //   "avatar": "/avatars/example-team.png"
   // }
+
+  // avatar is optional. Include the image file in your PR (PNG/JPEG/WebP, max 1 MiB).
+  // avatar необязателен. Добавьте файл картинки в PR (PNG/JPEG/WebP, до 1 МиБ).
+  {
+    "type": "person",
+    "name": "Ximper",
+    "url": "https://ximper.members.geass.su/",
+    "avatar": "/avatars/ximper.jpg"
+  }
 ]

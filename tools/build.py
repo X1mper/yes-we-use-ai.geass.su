@@ -33,6 +33,28 @@ def https_url(value, field):
     return value
 
 
+def avatar_path(value):
+    if not isinstance(value, str) or not re.fullmatch(
+            r'/avatars/[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.(?:png|jpe?g|webp)', value):
+        raise ValueError('avatar: use /avatars/name.png, .jpg, .jpeg or .webp')
+    path = ROOT / value.lstrip('/')
+    if (ROOT / 'avatars').is_symlink() or path.is_symlink() or not path.is_file():
+        raise ValueError(f'avatar: missing file or symlink: {value}')
+    if not 0 < path.stat().st_size <= 1024 * 1024:
+        raise ValueError(f'avatar: file must be at most 1 MiB: {value}')
+    with path.open('rb') as image:
+        header = image.read(12)
+    if path.suffix == '.png':
+        valid = header.startswith(b'\x89PNG\r\n\x1a\n')
+    elif path.suffix == '.webp':
+        valid = header[:4] == b'RIFF' and header[8:12] == b'WEBP'
+    else:
+        valid = header.startswith(b'\xff\xd8\xff')
+    if not valid:
+        raise ValueError(f'avatar: image header does not match extension: {value}')
+    return path
+
+
 def parse_jsonc(source):
     # Match quoted strings before comments so URLs and escaped quotes stay intact.
     tokens = r'"(?:\\.|[^"\\])*"|//[^\r\n]*|/\*[\s\S]*?\*/'
@@ -52,7 +74,7 @@ def load_supporters(path):
     seen_names, seen_urls = set(), set()
     for i, record in enumerate(records):
         label = f'supporters[{i}]'
-        if not isinstance(record, dict) or set(record) - {'type', 'name', 'url', 'description'}:
+        if not isinstance(record, dict) or set(record) - {'type', 'name', 'url', 'description', 'avatar'}:
             raise ValueError(f'{label}: unknown field or invalid record')
         if not {'type', 'name', 'url'} <= set(record):
             raise ValueError(f'{label}: type, name and url are required')
@@ -62,6 +84,8 @@ def load_supporters(path):
         https_url(record['url'], f'{label}.url')
         if 'description' in record:
             text(record['description'], f'{label}.description', 140)
+        if 'avatar' in record:
+            avatar_path(record['avatar'])
         identity = (record['type'], unicodedata.normalize('NFKC', record['name']).casefold())
         parsed = urlsplit(record['url'])
         url_key = (parsed.hostname.casefold(), parsed.path.rstrip('/'), parsed.query, parsed.fragment)
@@ -87,7 +111,11 @@ def render_supporters(records, lang):
         for entry in entries:
             name, url = html.escape(entry['name']), html.escape(entry['url'], quote=True)
             description = ('<span>' + html.escape(entry['description']) + '</span>') if entry.get('description') else ''
-            parts.append(f'<li><a href="{url}" rel="nofollow ugc">{name}</a>{description}</li>')
+            avatar = ''
+            if entry.get('avatar'):
+                src = html.escape(entry['avatar'], quote=True)
+                avatar = f'<img class="supporter-avatar" src="{src}" width="52" height="52" alt="" loading="lazy" decoding="async">'
+            parts.append(f'<li>{avatar}<div><a href="{url}" rel="nofollow ugc">{name}</a>{description}</div></li>')
         parts.append('</ul>')
     return '\n'.join(parts)
 
@@ -122,6 +150,12 @@ def build():
         target.write_text(source, encoding='utf-8')
     for name in ('style.css', 'language.js', 'favicon.svg', 'badge.svg', 'badge-ru.svg', 'hero.svg'):
         shutil.copyfile(ROOT / name, OUT / name)
+    avatar_output = OUT / 'avatars'
+    if avatar_output.exists():
+        shutil.rmtree(avatar_output)
+    for value in sorted({entry['avatar'] for entry in records if entry.get('avatar')}):
+        avatar_output.mkdir(exist_ok=True)
+        shutil.copyfile(avatar_path(value), OUT / value.lstrip('/'))
     print(f'Built RU/EN with {len(records)} supporter(s) → {OUT}')
 
 
