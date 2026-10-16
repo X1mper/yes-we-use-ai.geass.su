@@ -23,10 +23,11 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Build and inventory
+      - name: Validate, build and inventory
         shell: bash
         run: |
           set -euo pipefail
+          node --check language.js
           python3 tools/build.py
           python3 tools/release.py --source-commit "$GITHUB_SHA"
       - name: Publish deploy branch
