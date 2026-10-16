@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Validate community data and build the static site. Python 3.10+, stdlib only."""
-from svg_avatar import validate_svg
+from svg_avatar import normalize_svg
 import html
 import json
 from pathlib import Path
@@ -44,7 +44,7 @@ def avatar_path(value):
     if not 0 < path.stat().st_size <= 1024 * 1024:
         raise ValueError(f'avatar: file must be at most 1 MiB: {value}')
     if path.suffix == '.svg':
-        validate_svg(path.read_bytes())
+        normalize_svg(path.read_bytes())
         return path
     with path.open('rb') as image:
         header = image.read(12)
@@ -159,7 +159,12 @@ def build():
         shutil.rmtree(avatar_output)
     for value in sorted({entry['avatar'] for entry in records if entry.get('avatar')}):
         avatar_output.mkdir(exist_ok=True)
-        shutil.copyfile(avatar_path(value), OUT / value.lstrip('/'))
+        source = avatar_path(value)
+        destination = OUT / value.lstrip('/')
+        if source.suffix == '.svg':
+            destination.write_bytes(normalize_svg(source.read_bytes()))
+        else:
+            shutil.copyfile(source, destination)
     print(f'Built RU/EN with {len(records)} supporter(s) → {OUT}')
 
 
