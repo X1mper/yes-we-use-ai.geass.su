@@ -12,3 +12,26 @@ document.querySelectorAll('[data-language]').forEach(link => {
     catch { /* Navigation still works when storage is unavailable. */ }
   });
 });
+
+const copyStatus = document.querySelector('.copy-status');
+const russian = document.documentElement.lang === 'ru';
+document.querySelectorAll('[data-copy]').forEach(button => {
+  button.hidden = false;
+  button.addEventListener('click', async () => {
+    const field = document.getElementById(button.dataset.copy);
+    field.focus();
+    field.select();
+    button.disabled = true;
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(field.value);
+      copyStatus.textContent = russian ? 'Скопировано.' : 'Copied.';
+    } catch {
+      copyStatus.textContent = russian
+        ? 'Текст выделен. Нажмите Ctrl+C или выберите «Копировать».'
+        : 'Text selected. Press Ctrl+C or choose Copy.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+});
