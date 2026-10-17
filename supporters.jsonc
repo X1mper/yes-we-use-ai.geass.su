@@ -44,5 +44,12 @@
     "name": "Alexei Zebra",
     "url": "https://altlinux.space/alexei.zebra",
     "avatar": "/avatars/alexei-zerba.svg"
+  },
+  {
+    "type": "person",
+    "name": "Alexey Volkov",
+    "url": "https://qualimock.space",
+    "description": "Do ALT, do GNOME, do code, do a coffee break...",
+    "avatar": "/avatars/qualimock.png"
   }
 ]
